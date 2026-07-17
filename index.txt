@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our 1st Anniversary ❤️</title>
+    <!-- Importing Google Fonts for elegant typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;600&family=Fira+Code:wght@400&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: #0d0d0d;
+            color: #ffffff;
+            font-family: 'Poppins', sans-serif;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            text-align: center;
+            perspective: 1000px;
+            position: relative;
+        }
+
+        /* Dynamic Animated Background Glow */
+        .bg-glow {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(255, 51, 102, 0.15) 0%, rgba(0, 0, 0, 0) 70%);
+            transform: translate(-50%, -50%);
+            z-index: 2;
+            pointer-events: none;
+            transition: all 2s ease-in-out;
+            animation: floatGlow 8s infinite alternate;
+        }
+
+        @keyframes floatGlow {
+            0% { transform: translate(-50%, -50%) scale(1); opacity: 0.6; }
+            100% { transform: translate(-48%, -52%) scale(1.2); opacity: 0.9; }
+        }
+
+        /* Container styling */
+        .container {
+            width: 90%;
+            max-width: 650px;
+            z-index: 10;
+        }
+
+        /* Stage 1: The Typing Text */
+        .quote-box {
+            font-family: 'Fira Code', monospace;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #ff7597;
+            border-right: 2px solid #ff7597;
+            white-space: pre-wrap;
+            overflow: hidden;
+            margin: 0 auto;
+            display: inline-block;
+            text-align: left;
+        }
+
+        /* Stage 2: Photos Slideshow */
+        .photo-box {
+            display: none;
+            width: 320px;
+            height: 400px;
+            margin: 20px auto;
+            position: relative;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(255, 51, 102, 0.4);
+            opacity: 0;
+            transform: scale(0.8);
+            transition: all 1.5s ease-in-out;
+        }
+
+        .photo-box.show {
+            display: block;
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .slide-img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0;
+            transform: scale(1.1) rotate(2deg);
+            transition: opacity 1.5s ease-in-out, transform 2s ease-in-out;
+            border-radius: 15px;
+        }
+
+        .slide-img.active {
+            opacity: 1;
+            transform: scale(1) rotate(0deg);
+        }
+
+        /* Stage 3: The Final Wish */
+        .wish-box {
+            display: none;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 2s ease-in-out;
+        }
+
+        .wish-box.show {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .wish-title {
+            font-family: 'Dancing Script', cursive;
+            font-size: 3.5rem;
+            color: #ff3366;
+            text-shadow: 0 0 15px rgba(255, 51, 102, 0.6);
+            margin-bottom: 15px;
+            animation: pulse 2s infinite alternate;
+        }
+
+        .sub-wish {
+            font-size: 1.2rem;
+            font-weight: 300;
+            letter-spacing: 1.5px;
+            color: #ddd;
+            margin-bottom: 25px;
+        }
+
+        /* Action Button to Open Letter */
+        .letter-btn {
+            background: #ff3366;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 25px;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(255, 51, 102, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .letter-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(255, 51, 102, 0.6);
+        }
+
+        /* Love Letter Overlay Pop-up */
+        .letter-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            z-index: 200;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .letter-overlay.show {
+            display: flex;
+            opacity: 1;
+        }
+
+        .letter-content {
+            background: #fffdf9;
+            color: #2b2b2b;
+            padding: 40px 30px;
+            width: 90%;
+            max-width: 500px;
+            border-radius: 10px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+            text-align: left;
+            position: relative;
+            transform: translateY(-50px);
+            transition: transform 0.5s ease;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .letter-overlay.show .letter-content {
+            transform: translateY(0);
+        }
+
+        .letter-content h2 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.5rem;
+            color: #ff3366;
+            margin-bottom: 20px;
+            border-bottom: 1px dashed #ff7597;
+            padding-bottom: 10px;
+        }
+
+        .letter-p {
+            font-size: 1rem;
+            line-height: 1.8;
+            margin-bottom: 15px;
+            font-weight: 400;
+        }
+
+        .math-quote {
+            background: #fdf2f4;
+            border-left: 3px solid #ff3366;
+            padding: 10px 15px;
+            margin: 15px 0;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9rem;
+            color: #c0392b;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #888;
+            transition: color 0.3s;
+        }
+
+        .close-btn:hover {
+            color: #ff3366;
+        }
+
+        /* Music Controls */
+        .audio-control {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 100;
+            background: rgba(255, 51, 102, 0.2);
+            border: 2px solid #ff3366;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.9rem;
+            backdrop-filter: blur(5px);
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .audio-control:hover {
+            background: #ff3366;
+            box-shadow: 0 0 15px rgba(255, 51, 102, 0.5);
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.05); }
+        }
+
+        canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 3;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-glow" id="bgGlow"></div>
+    <canvas id="heartCanvas"></canvas>
+
+    <!-- Music Track -->
+    <audio id="bgMusic" loop>
+        <source src="music.mp3" type="audio/mpeg">
+    </audio>
+
+    <button class="audio-control" onclick="toggleMusic()">
+        <span id="musicIcon">🎵</span> <span id="musicBtnText">Play Music</span>
+    </button>
+
+    <div class="container">
+        <!-- Stage 1 Container: Typing Effect -->
+        <div id="typingContainer">
+            <span class="quote-box" id="typingText"></span>
+        </div>
+
+        <!-- Stage 2 Container: Photos Slideshow -->
+        <div id="photoContainer" class="photo-box">
+            <img src="photo1.jpg" class="slide-img active" alt="Memory 1">
+            <img src="photo2.jpg" class="slide-img" alt="Memory 2">
+            <img src="photo3.jpg" class="slide-img" alt="Memory 3">
+            <img src="photo4.jpg" class="slide-img" alt="Memory 4">
+            <img src="photo5.jpg" class="slide-img" alt="Memory 5">
+            <img src="photo6.jpg" class="slide-img" alt="Memory 6">
+            <img src="photo7.jpg" class="slide-img" alt="Memory 7">
+            <img src="photo8.jpg" class="slide-img" alt="Memory 8">
+            <img src="photo9.jpg" class="slide-img" alt="Memory 9">
+            <img src="photo10.jpg" class="slide-img" alt="Memory 10">
+            <img src="photo11.jpg" class="slide-img" alt="Memory 11">
+            <img src="photo12.jpg" class="slide-img" alt="Memory 12">
+            <img src="photo13.jpg" class="slide-img" alt="Memory 13">
+            <img src="photo14.jpg" class="slide-img" alt="Memory 14">
+            <img src="phot15.jpg" class="slide-img" alt="Memory 15">
+            <img src="photo16.jpg" class="slide-img" alt="Memory 16">
+
+        </div>
+
+        <!-- Stage 3 Container: Final Wish -->
+        <div id="wishContainer" class="wish-box">
+            <h1 class="wish-title">Happy 1st Anniversary! ❤️</h1>
+            <p class="sub-wish">We are perfectly entangled across space and time.</p>
+            <button class="letter-btn" onclick="openLetter()">❤️ Open Our Letter</button>
+        </div>
+    </div>
+
+    <!-- NEW: Pop-up Love Letter Overlay -->
+    <div class="letter-overlay" id="letterOverlay">
+        <div class="letter-content">
+            <span class="close-btn" onclick="closeLetter()">&times;</span>
+            <h2>My Dearest,</h2>
+            <p class="letter-p">පසුගිය අවුරුද්ද පුරාවටම මගේ ජීවිතේ ලස්සනම මතකයන් ටික එකතු කළේ ඔයා. අපි එකට ගත කරපු හැම මොහොතක්ම මට හුඟක් විශේෂයි.</p>
+            
+            <p class="letter-p"><b>When you say stuff like that to me...</b>
+සමහර දවස් තියෙනවා<br>
+හැමදේම කරන්නේ මම විතරයි නේද කියලා හිතෙන..<br>
+සමහර දවස් තියෙනවා<br>
+එයා වෙනුවෙන් ඕන දෙයක් කියලා හිතෙන...<br>
+තව දවස් තියෙනවා<br>
+හැමදේම නතර කරන්න හිතෙන...<br>
+ගොඩක් දවස් තියෙනවා<br>
+මැරෙනකම් ම එයා විතරයි කියලා හිතෙන...<br>
+තවත් දවස් තියෙනවා<br>
+පැය ගනන් කතා නොකර ඉන්න..<br>
+තව දවස් වලට<br>
+නවත්තනෙම නැතුව කියවන...<br>
+එයා කියන දේවල් වරු ගනන් අහන් ඉන්න...<br>
+දුක හිතුන දවස්,<br>
+රිදෙන දවස්,<br>
+අඩන දවස්,<br>
+ගොඩක් මැද<br>
+දවස පුරාම හිනාවුන දවස්...<br>
+ආදරේ විතරක් තිබුන දවස්...<br>
+සතුටින් ම හිටපු දවස්...<br>
+ඉතින් ඔය මොන දවසක වුනත්,<br>
+දවස ඉවර වෙලා යන රෑ වරුවක,<br>
+ඔයාට හිතෙන්නේ හෙට උදේටත් එයාව දකින්න නම්,<br>
+මම කියන්නේ,<br>
+ඔයා නැවතිලා තියෙන්නේ හරි ම තැන!<br></p>
+            
+            <div class="math-quote">
+                In every lifetime, I'd still choose you. 🔐✨<br>
+Every love story is beautiful, but ours is my absolute favorite. 🧚‍♂️🌸
+            </div>
+            
+            <p class="letter-p"><b>I only said it because I love you in a way I could never explain to anyone else, my everything.</b>
+සමහර දවස් තියෙනවා<br>
+ඔයා තනියමම මහන්සි වෙනවා බලන් ඉන්න බැරි...<br>
+තවත් දවස් තියෙනවා<br>
+ඔයා වෙනුවෙන් මුළු ලෝකෙම වුණත් අත්හරින්න හැකි...<br>
+දවස් තියෙනවා<br>
+මගේ නිශ්ශබ්දතාවයෙන් ඔයාව රිද්දපු,<br>
+ඒත් තව දවස් තියෙනවා<br>
+ඔයාගේ නොනැවතෙන කියවිල්ල අස්සේ මගේ ලෝකයම සුවපත් වුණු...<br>
+අපි රණ්ඩු වුණු දවස්,<br>
+තරහා වෙලා අහක බලාගත්තු දවස් මැද,<br>
+ඔය ඇස් දෙකෙන් වැටුණු කඳුළු බිංදුවක් ගාණේ<br>
+මගේ හිත පෑරුණු වාර අනන්තයි...<br>
+ඒත්...<br>
+ඒ හැම දවසක්ම කෙළවර වෙන කළු රෑක,<br>
+මගේ හුස්ම වැටෙන මානයේ ඔයා සුවසේ නිදාගන්නා දෙස බලා,<br>
+"ලබන ආත්මෙත් මට ඔයාවම ලැබෙන්න" කියලා<br>
+මම දෙවියන්ගෙන් ඉල්ලනවා නම්...<br>
+ඉතින් මගේ පණ,<br>
+මමත් ඔයාට කියන්නේ එකම එක දෙයයි...<br>
+ඔයා විතරක් නෙවෙයි,<br>
+මමත් නැවතිලා ඉන්නේ මේ සංසාරේ <b> හමුවුණු හරිම තැන! ❤️</b><br></p>
+            <p class="letter-p" style="font-family: 'Dancing Script', cursive; font-size: 1.8rem; text-align: right; color: #ff3366;">With Love Always, ❤️</p>
+        </div>
+    </div>
+
+    <script>
+        // Typing Animation Text
+        const quote = "Through all of life's complex waves, ups, and downs,\nthe final summation is always 'Us'.";
+        const typingSpeed = 50;
+        let charIndex = 0;
+
+        const music = document.getElementById("bgMusic");
+        const musicBtnText = document.getElementById("musicBtnText");
+        const musicIcon = document.getElementById("musicIcon");
+
+        function toggleMusic() {
+            if (music.paused) {
+                music.play().then(() => {
+                    musicBtnText.innerText = "Pause Music";
+                    musicIcon.innerText = "⏸️";
+                }).catch(e => console.log("Audio play blocked", e));
+            } else {
+                music.pause();
+                musicBtnText.innerText = "Play Music";
+                musicIcon.innerText = "🎵";
+            }
+        }
+
+        function typeWriter() {
+            if (charIndex < quote.length) {
+                document.getElementById("typingText").innerHTML += quote.charAt(charIndex);
+                charIndex++;
+                setTimeout(typeWriter, typingSpeed);
+            } else {
+                document.getElementById("typingText").style.borderRight = "none";
+                setTimeout(transitionToPhotos, 2500);
+            }
+        }
+
+        function transitionToPhotos() {
+            document.getElementById("typingContainer").style.transition = "opacity 1s";
+            document.getElementById("typingContainer").style.opacity = 0;
+
+            setTimeout(() => {
+                document.getElementById("typingContainer").style.display = "none";
+                const photoBox = document.getElementById("photoContainer");
+                photoBox.classList.add("show");
+                startSlideshow();
+            }, 1000);
+        }
+
+        let currentSlide = 0;
+        const slides = document.querySelectorAll(".slide-img");
+        const slideInterval = 3000;
+        const bgGlow = document.getElementById("bgGlow");
+
+        const colors = [
+            "radial-gradient(circle, rgba(255, 51, 102, 0.25) 0%, rgba(0, 0, 0, 0) 70%)",
+            "radial-gradient(circle, rgba(0, 255, 204, 0.2) 0%, rgba(0, 0, 0, 0) 70%)",
+            "radial-gradient(circle, rgba(155, 89, 182, 0.23) 0%, rgba(0, 0, 0, 0) 70%)",
+            "radial-gradient(circle, rgba(241, 196, 15, 0.18) 0%, rgba(0, 0, 0, 0) 70%)"
+        ];
+
+        function startSlideshow() {
+            const timer = setInterval(() => {
+                slides[currentSlide].classList.remove("active");
+                currentSlide = currentSlide + 1;
+                bgGlow.style.background = colors[currentSlide % colors.length];
+
+                if (currentSlide >= slides.length) {
+                    clearInterval(timer);
+                    setTimeout(transitionToWish, 1000);
+                } else {
+                    slides[currentSlide].classList.add("active");
+                }
+            }, slideInterval);
+        }
+
+        function transitionToWish() {
+            const photoBox = document.getElementById("photoContainer");
+            photoBox.style.transition = "opacity 1s";
+            photoBox.style.opacity = 0;
+            bgGlow.style.background = "radial-gradient(circle, rgba(255, 51, 102, 0.35) 0%, rgba(0, 0, 0, 0) 70%)";
+
+            setTimeout(() => {
+                photoBox.style.display = "none";
+                document.getElementById("wishContainer").classList.add("show");
+                initHearts();
+            }, 1000);
+        }
+
+        // Letter Actions
+        function openLetter() {
+            const overlay = document.getElementById("letterOverlay");
+            overlay.style.display = "flex";
+            setTimeout(() => overlay.classList.add("show"), 10);
+        }
+
+        function closeLetter() {
+            const overlay = document.getElementById("letterOverlay");
+            overlay.classList.remove("show");
+            setTimeout(() => overlay.style.display = "none", 500);
+        }
+
+        // --- Canvas Hearts Animation ---
+        const canvas = document.getElementById("heartCanvas");
+        const ctx = canvas.getContext("2d");
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const hearts = [];
+
+        class Heart {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = canvas.height + Math.random() * 100;
+                this.size = Math.random() * 15 + 5;
+                this.speedY = -(Math.random() * 1.5 + 0.5);
+                this.speedX = Math.sin(Math.random() * 2) * 0.5;
+                this.opacity = Math.random() * 0.7 + 0.3;
+            }
+
+            draw() {
+                ctx.save();
+                ctx.globalAlpha = this.opacity;
+                ctx.fillStyle = "#ff3366";
+                ctx.beginPath();
+                ctx.moveTo(this.x, this.y + this.size / 4);
+                ctx.quadraticCurveTo(this.x, this.y, this.x + this.size / 2, this.y);
+                ctx.quadraticCurveTo(this.x + this.size, this.y, this.x + this.size, this.y + this.size / 3);
+                ctx.quadraticCurveTo(this.x + this.size, this.y + (this.size * 2) / 3, this.x + this.size / 2, this.y + this.size);
+                ctx.quadraticCurveTo(this.x, this.y + (this.size * 2) / 3, this.x, this.y + this.size / 3);
+                ctx.quadraticCurveTo(this.x, this.y, this.x, this.y + this.size / 4);
+                ctx.closePath();
+                ctx.fill();
+                ctx.restore();
+            }
+
+            update() {
+                this.y += this.speedY;
+                this.x += this.speedX;
+                if (this.opacity > 0.01) this.opacity -= 0.001;
+            }
+        }
+
+        function initHearts() {
+            setInterval(() => {
+                if (hearts.length < 80) hearts.push(new Heart());
+            }, 150);
+            animate();
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (let i = 0; i < hearts.length; i++) {
+                hearts[i].update();
+                hearts[i].draw();
+                if (hearts[i].y < -20 || hearts[i].opacity <= 0.01) {
+                    hearts.splice(i, 1);
+                    i--;
+                }
+            }
+            requestAnimationFrame(animate);
+        }
+
+        window.onload = typeWriter;
+    </script>
+</body>
+</html>
